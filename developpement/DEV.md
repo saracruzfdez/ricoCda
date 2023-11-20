@@ -1,0 +1,1 @@
+Bienvenue dans le dossier qui gère le développement front-end et back-end de Rico
