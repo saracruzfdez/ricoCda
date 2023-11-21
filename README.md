@@ -1,1 +1,1 @@
-Salut, bienvenue dans le projet Rico. Ce projet est développé dans le cadre de ma préparation au diplôme de développeur d'applications auquel je suis actuellement inscrit(e). Je te souhaite une agréable visite !
+Salut, bienvenue dans le projet Rico. Ce projet est développé dans le cadre de ma préparation au diplôme de développeur d'applications auquel je suis actuellement inscrite. Je te souhaite une agréable visite !
