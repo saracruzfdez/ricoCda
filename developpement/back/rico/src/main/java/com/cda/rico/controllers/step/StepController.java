@@ -1,7 +1,7 @@
-package com.cda.rico.controllers.user;
+package com.cda.rico.controllers.step;
 
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class StepController {
 }

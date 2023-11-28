@@ -7,5 +7,6 @@ import lombok.Value;
 @Value
 public class UserDTO {
     private String name;
-    private String email;
 }
+
+// Voir owner dvdstore pour la securite et changer en owner l'user

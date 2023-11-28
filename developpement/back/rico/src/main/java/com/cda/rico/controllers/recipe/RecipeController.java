@@ -1,7 +1,7 @@
-package com.cda.rico.controllers.user;
+package com.cda.rico.controllers.recipe;
 
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class RecipeController {
 }
