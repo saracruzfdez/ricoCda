@@ -2,14 +2,15 @@ package com.cda.rico.repositories.ingredient;
 
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 // Specifying the table name for the entity
 @Table(name="ingredient")
-@Data
+@Getter
+@Setter
 public class IngredientRepositoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +29,13 @@ public class IngredientRepositoryModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private RecipeRepositoryModel recipeRepositoryModel;
+
+    public void setRecipe_id(int recipeId) {
+    }
+
+    // POST, PLUS BESOIN GRACE A MAPSTRUCT QUI GENERE LE CONSTRUCTEUR
+
 }
+
+
+
