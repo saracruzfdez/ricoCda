@@ -1,6 +1,7 @@
 package com.cda.rico.repositories.menu;
 
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
+import com.cda.rico.repositories.shopping_list_ingredient.ShoppingListIngredientRepositoryModel;
 import com.cda.rico.repositories.user.UserRepositoryModel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,8 +23,8 @@ public class MenuRepositoryModel {
     @Column
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserRepositoryModel userRepositoryModel;
 
     @ManyToMany
@@ -32,5 +33,9 @@ public class MenuRepositoryModel {
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "recipe_id")
     )
-    private List<RecipeRepositoryModel> menu_recipes = new ArrayList<>();
+    private List<RecipeRepositoryModel> menuRecipes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "menuRepositoryModel", cascade = CascadeType.ALL)
+    private List<ShoppingListIngredientRepositoryModel> shoppingListIngredients  = new ArrayList<>();
+
 }

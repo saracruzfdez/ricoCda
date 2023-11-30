@@ -30,9 +30,6 @@ public class IngredientRepositoryModel {
     @JoinColumn(name = "recipe_id")
     private RecipeRepositoryModel recipeRepositoryModel;
 
-    public void setRecipe_id(int recipeId) {
-    }
-
     // POST, PLUS BESOIN GRACE A MAPSTRUCT QUI GENERE LE CONSTRUCTEUR
 
 }

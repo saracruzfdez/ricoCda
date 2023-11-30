@@ -1,4 +1,4 @@
-package com.cda.rico.repositories.rating;
+/* package com.cda.rico.repositories.rating;
 
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 import com.cda.rico.repositories.user.UserRepositoryModel;
@@ -29,4 +29,4 @@ public class RatingRepositoryModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private RecipeRepositoryModel recipeRepositoryModel;
-}
+}*/

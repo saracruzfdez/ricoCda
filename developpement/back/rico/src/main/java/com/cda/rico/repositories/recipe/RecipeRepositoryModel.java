@@ -1,6 +1,8 @@
 package com.cda.rico.repositories.recipe;
 
+import com.cda.rico.repositories.ingredient.IngredientRepositoryModel;
 import com.cda.rico.repositories.menu.MenuRepositoryModel;
+import com.cda.rico.repositories.step.StepRepositoryModel;
 import com.cda.rico.repositories.user.UserRepositoryModel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -47,14 +49,20 @@ public class RecipeRepositoryModel {
     @Column
     private String country_origin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "user_id")
+    @OneToMany(mappedBy = "recipeRepositoryModel", cascade = CascadeType.ALL)
+    private List<IngredientRepositoryModel> ingredients  = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recipeRepositoryModel", cascade = CascadeType.ALL)
+    private List<StepRepositoryModel> steps  = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserRepositoryModel userRepositoryModel;
 
-    @ManyToMany(mappedBy = "menu_recipes")
+    @ManyToMany(mappedBy = "menuRecipes")
     private List<MenuRepositoryModel> menus = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "favorite_recipes")
+    @ManyToMany(mappedBy = "favoriteRecipes")
     private List<UserRepositoryModel> users = new ArrayList<>();
     
 }
