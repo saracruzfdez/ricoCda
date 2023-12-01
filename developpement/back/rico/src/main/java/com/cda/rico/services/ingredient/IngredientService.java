@@ -8,18 +8,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IngredientService {
-    private final IngredientRepository ingredientRepository;
-    private final IngredientMapper ingredientMapper;
+//    private final IngredientRepository ingredientRepository;
+//    private final IngredientMapper ingredientMapper;
 
-    @Autowired
-    public IngredientService(IngredientRepository ingredientRepository, IngredientMapper ingredientMapper){
-        this.ingredientRepository = ingredientRepository;
-        this.ingredientMapper = ingredientMapper;
-    }
-
-    public boolean add(IngredientServiceModel ingredientServiceModel){
-        IngredientRepositoryModel ingredientRepositoryModel = ingredientMapper.serviceToRepository(ingredientServiceModel);
-        IngredientRepositoryModel ingredientRepositoryModelReturned = ingredientRepository.save(ingredientRepositoryModel);
-        return ingredientRepositoryModelReturned != null;
-    }
+//    @Autowired
+//    public IngredientService(IngredientRepository ingredientRepository, IngredientMapper ingredientMapper){
+//        this.ingredientRepository = ingredientRepository;
+//        this.ingredientMapper = ingredientMapper;
+//    }
+//
+//    public boolean add(IngredientServiceModel ingredientServiceModel){
+//        IngredientRepositoryModel ingredientRepositoryModel = ingredientMapper.serviceToRepository(ingredientServiceModel);
+//        IngredientRepositoryModel ingredientRepositoryModelReturned = ingredientRepository.save(ingredientRepositoryModel);
+//        return ingredientRepositoryModelReturned != null;
+//    }
 }

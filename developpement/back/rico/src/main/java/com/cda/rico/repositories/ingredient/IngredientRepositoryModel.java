@@ -1,5 +1,6 @@
 package com.cda.rico.repositories.ingredient;
 
+import com.cda.rico.enums.UnitEnum;
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,12 +24,17 @@ public class IngredientRepositoryModel {
     @Column
     private int quantity;
 
+    //@Enumerated(EnumType.STRING)
     @Column
     private String unit;
 
+    //Relationship
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private RecipeRepositoryModel recipeRepositoryModel;
+
+    public void setRecipe_id(int recipeId) {
+    }
 
     // POST, PLUS BESOIN GRACE A MAPSTRUCT QUI GENERE LE CONSTRUCTEUR
 

@@ -23,6 +23,7 @@ public class MenuRepositoryModel {
     @Column
     private String name;
 
+    //Relationship
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserRepositoryModel userRepositoryModel;

@@ -1,7 +1,9 @@
 package com.cda.rico.repositories.recipe;
 
+import com.cda.rico.enums.CategoryEnum;
 import com.cda.rico.repositories.ingredient.IngredientRepositoryModel;
 import com.cda.rico.repositories.menu.MenuRepositoryModel;
+import com.cda.rico.repositories.rating.RatingRepositoryModel;
 import com.cda.rico.repositories.step.StepRepositoryModel;
 import com.cda.rico.repositories.user.UserRepositoryModel;
 import jakarta.persistence.*;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 // Marking the class as a database entity
 @Entity
@@ -49,6 +52,7 @@ public class RecipeRepositoryModel {
     @Column
     private String country_origin;
 
+    // Relationship
     @OneToMany(mappedBy = "recipeRepositoryModel", cascade = CascadeType.ALL)
     private List<IngredientRepositoryModel> ingredients  = new ArrayList<>();
 
@@ -64,5 +68,7 @@ public class RecipeRepositoryModel {
 
     @ManyToMany(mappedBy = "favoriteRecipes")
     private List<UserRepositoryModel> users = new ArrayList<>();
-    
+
+    @OneToMany(mappedBy = "recipeRepositoryModel")
+    Set<RatingRepositoryModel> ratings;
 }

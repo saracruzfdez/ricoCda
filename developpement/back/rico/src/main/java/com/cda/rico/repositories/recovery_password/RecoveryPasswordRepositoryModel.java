@@ -19,6 +19,7 @@ public class RecoveryPasswordRepositoryModel {
     @Column
     private String code;
 
+    // Relationship
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private UserRepositoryModel userRepositoryModel;

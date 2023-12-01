@@ -1,5 +1,5 @@
-package com.cda.rico.controllers.ingredient;
-
+// package com.cda.rico.controllers.ingredient;
+/*
 import com.cda.rico.mappers.IngredientMapper;
 import com.cda.rico.services.ingredient.IngredientService;
 import com.cda.rico.services.ingredient.IngredientServiceModel;
@@ -27,3 +27,4 @@ public class IngredientController {
         return ingredientService.add(ingredientServiceModel);
     }
 }
+*/
