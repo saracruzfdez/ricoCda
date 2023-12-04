@@ -19,7 +19,8 @@ public class RecoveryPasswordRepositoryModel {
     @Column
     private String code;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "user_id")
+    // Relationship
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
     private UserRepositoryModel userRepositoryModel;
 }

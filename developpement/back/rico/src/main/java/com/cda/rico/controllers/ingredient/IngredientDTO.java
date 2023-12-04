@@ -1,4 +1,4 @@
 package com.cda.rico.controllers.ingredient;
 
-public class IngredientDTO {
+public record IngredientDTO (String name, int quantity, String unit, int recipe_id){
 }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Table(name="rating")
 @Data
 public class RatingRepositoryModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

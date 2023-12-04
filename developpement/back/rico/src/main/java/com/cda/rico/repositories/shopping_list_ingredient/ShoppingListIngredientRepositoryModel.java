@@ -1,5 +1,6 @@
 package com.cda.rico.repositories.shopping_list_ingredient;
 
+import com.cda.rico.enums.UnitEnum;
 import com.cda.rico.repositories.menu.MenuRepositoryModel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,9 +22,11 @@ public class ShoppingListIngredientRepositoryModel {
     @Column
     private int quantity;
 
+    // @Enumerated(EnumType.STRING) // Specifies Enum representated as a string
     @Column
     private String unit;
 
+    // Relationship
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "menu_id")
     private MenuRepositoryModel menuRepositoryModel;

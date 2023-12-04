@@ -21,6 +21,7 @@ public class StepRepositoryModel {
     @Column
     private String description;
 
+    // Relationship
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private RecipeRepositoryModel recipeRepositoryModel;
