@@ -12,6 +12,6 @@ public interface IngredientMapper {
     IngredientMapper INSTANCE = Mappers.getMapper(IngredientMapper.class);
     // POUR LE POST :
     IngredientServiceModel dtoToServiceModel(IngredientDTO ingredientDTO);
-    IngredientRepositoryModel serviceToRepository(IngredientServiceModel serviceModel);
+    IngredientRepositoryModel serviceToRepository(IngredientServiceModel ingredientServiceModel);
 
 }

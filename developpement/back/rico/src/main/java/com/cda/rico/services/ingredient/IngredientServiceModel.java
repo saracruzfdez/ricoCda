@@ -11,7 +11,5 @@ public class IngredientServiceModel {
     private UnitEnum unit;  // Changed to UnitEnum in the service
     private int recipe_id;
 
-
-
     // POST, PLUS BESOIN GRACE A MAPSTRUCT QUI GENERE LE CONSTRUCTEUR
 }

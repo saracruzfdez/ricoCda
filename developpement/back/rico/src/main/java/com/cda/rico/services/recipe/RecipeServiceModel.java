@@ -26,7 +26,7 @@ public class RecipeServiceModel {
     private List<IngredientServiceModel> ingredients;
     private List<StepServiceModel> steps;
     private int userId;
-/*    private List<MenuServiceModel> menus;
+/*  private List<MenuServiceModel> menus;
     private List<UserServiceModel> users;
     private Set<RatingServiceModel> ratings;*/
 
