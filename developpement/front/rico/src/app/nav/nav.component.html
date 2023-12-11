@@ -1,0 +1,88 @@
+
+<nav class="navbar navbar-expand-lg navbar-white bg-white fixed-top scf-navbar-color">
+
+    <div class="container-fluid">
+        <a
+            class="navbar-brand"
+            routerLink
+        >
+            <img
+                width="150"
+                src="assets/rico.png"
+                alt="image"
+            >
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContent"
+        >
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <!-- <a class="nav-link" routerLink="/clients" *ngIf="authentication.is_auth()">>Clients</a> -->
+                    <a
+                        class="nav-link"
+                        [class.active]="isActive('/recipes')"
+                        routerLink="/recipes"
+                    >
+                        Recettes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <!-- <a class="nav-link" routerLink="/clients" *ngIf="authentication.is_auth()">>Clients</a> -->
+                    <a
+                        class="nav-link"
+                        [class.active]="isActive('/menus')"
+                        routerLink="/menus"
+                    >
+                        Tes menus
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <!-- <a class="nav-link" routerLink="/clients" *ngIf="authentication.is_auth()">>Clients</a> -->
+                    <a
+                        class="nav-link"
+                        [class.active]="isActive('/shopping-list')"
+                        routerLink="/shopping-list"
+                    >
+                        Liste de courses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <!-- <a class="nav-link" routerLink="/clients" *ngIf="authentication.is_auth()">>Clients</a> -->
+                    <a
+                        class="nav-link"
+                        routerLink=""
+                    >
+                        Favoris
+                    </a>
+                </li>
+
+            </ul>
+
+            <!-- <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="#" *ngIf="authentication.is_auth()">Hello <span class="badge rounded-pill bg-light text-dark">Admin !</span>
+                </a>
+            </li>
+        </ul> -->
+
+            <!-- <button routerLink="/login-form" class="btn btn-secondary" type="submit" (click)="deconnexion()">{{ authentication.is_auth() ? 'Se déconnecter' : 'Se connecter'}}</button> -->
+
+        </div>
+    </div>
+</nav>

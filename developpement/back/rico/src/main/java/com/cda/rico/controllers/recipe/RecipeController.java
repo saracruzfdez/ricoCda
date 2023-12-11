@@ -7,6 +7,10 @@ import com.cda.rico.services.recipe.RecipeServiceModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/recipes")
 public class RecipeController {
@@ -32,6 +36,14 @@ public class RecipeController {
         recipeService.update(id, updatedRecipeServiceModel);
 
         return updatedRecipeServiceModel != null;
+    }
+
+    @GetMapping
+    public List<RecipeDTO> getAll(){
+        List<RecipeServiceModel> recipeServiceModels = recipeService.getAll();
+        return recipeServiceModels.stream()
+                .map(RecipeMapper.INSTANCE::recipeServiceModelToDTO)
+                .collect(Collectors.toList());
     }
 
 }

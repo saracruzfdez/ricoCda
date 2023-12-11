@@ -1,0 +1,7 @@
+.scf-navbar-color{
+    background-color: #FDF9E0 !important;
+}
+
+.nav-link.active {
+    font-weight: bold; /* Puedes agregar estilos adicionales según tus necesidades */
+  }

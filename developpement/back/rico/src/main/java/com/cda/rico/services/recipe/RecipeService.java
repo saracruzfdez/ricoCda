@@ -7,11 +7,9 @@ import com.cda.rico.repositories.recipe.RecipeRepository;
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 
 import com.cda.rico.repositories.step.StepRepositoryModel;
-import com.cda.rico.services.ingredient.IngredientServiceModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,52 +28,51 @@ public class RecipeService {
         // Map RecipeServiceModel to RecipeRepositoryModel
         RecipeRepositoryModel recipeRepositoryModel = RecipeMapper.INSTANCE.serviceToRepository(recipeServiceModel);
 
-        // Get the list of ingredients from RecipeServiceModel (because id_recipe was null in recipeServiceModel (JPA needs the entire object, not only the id)) :
-        /*List<IngredientServiceModel> ingredientServiceModels = recipeServiceModel.getIngredients();*/
-
-        // Initialize the list of ingredients in the recipe repository model (in order to map all the attributes manually not with mapstruct, so we can set all the values and have the value of id_recipe) :
-        /*recipeRepositoryModel.setIngredients(new ArrayList<>());*/
-        // Loop through each ingredient in the service model
-        /* for (IngredientServiceModel ingredientServiceModel : ingredientServiceModels) {
-            // Create a new IngredientRepositoryModel and add it to the list of ingredients in the recipe repository model
-            recipeRepositoryModel.getIngredients().add(
-                    new IngredientRepositoryModel(
-                            ingredientServiceModel.getId(),
-                            ingredientServiceModel.getName(),
-                            ingredientServiceModel.getQuantity(),
-                            ingredientServiceModel.getUnit().toString(),
-                            // Retrieve the corresponding recipe from the database based on the recipe_id in the service model
-                            recipeRepository.findById(ingredientServiceModel.getRecipe_id()).get())
-            );
-        }*/
-
+        /*
         for(IngredientRepositoryModel ingredientRepositoryModel : recipeRepositoryModel.getIngredients())
         {
             ingredientRepositoryModel.setRecipeRepositoryModel(recipeRepositoryModel);
         }
 
-        for(StepRepositoryModel stepRepositoryModel : recipeRepositoryModel.getSteps())
-        {
+        // Iterate through the list of steps in the recipeRepositoryModel
+        for (StepRepositoryModel stepRepositoryModel : recipeRepositoryModel.getSteps()) {
+            // Set the recipeRepositoryModel for each step in the loop
             stepRepositoryModel.setRecipeRepositoryModel(recipeRepositoryModel);
-        }
+        }*/
+
 
         // Save the recipe in the database
         RecipeRepositoryModel recipeRepositoryModelReturned = recipeRepository.save(recipeRepositoryModel);
 
+        recipeRepositoryModelReturned.getIngredients().stream().map((x) -> ingredientRepository.save(new IngredientRepositoryModel(
+                x.getId(), x.getName(), x.getQuantity(), x.getUnit(),recipeRepositoryModel
+        ))).toList();
         // Return true if the recipe was successfully saved
         return recipeRepositoryModelReturned != null;
     }
 
     public void deleteById(int id) {recipeRepository.deleteById(id);}
 
-    public boolean update(int id, RecipeServiceModel  updatedRecipe) {
+    public List<RecipeServiceModel> getAll(){
+        List<RecipeRepositoryModel> recipeRepositoryModels = (List<RecipeRepositoryModel>) recipeRepository.findAll();
+        return recipeRepositoryModels.stream()
+                .map(RecipeMapper.INSTANCE::repositoryToService).toList();
+    }
 
+    public boolean update(int id, RecipeServiceModel updatedRecipe) {
+
+        // Convert the updatedRecipe from a service model to a repository model
         RecipeRepositoryModel recipeRepositoryModel = RecipeMapper.INSTANCE.serviceToRepository(updatedRecipe);
 
+        // Retrieve the existing recipe from the database based on the provided ID
         Optional<RecipeRepositoryModel> existingRecipe = recipeRepository.findById(id);
+
+        // Check if the recipe with the given ID exists in the database
         if (existingRecipe.isPresent()) {
+            // If the recipe exists, retrieve it for modification
             RecipeRepositoryModel recipeToUpdate = existingRecipe.get();
 
+            // Update various fields of the existing recipe with the information from the updatedRecipe
             recipeToUpdate.setImage_path(updatedRecipe.getImage_path());
             recipeToUpdate.setCategory(updatedRecipe.getCategory().toString());
             recipeToUpdate.setTitle(updatedRecipe.getTitle());
@@ -86,7 +83,6 @@ public class RecipeService {
             recipeToUpdate.setAverage_cost(updatedRecipe.getAverage_cost().toString());
             recipeToUpdate.setCountry_origin(updatedRecipe.getCountry_origin());
 
-
 //            // Update ingredients list
 //            List<IngredientServiceModel> updatedIngredients = updatedRecipe.getIngredients();
 //            if (updatedIngredients != null) {
@@ -94,7 +90,6 @@ public class RecipeService {
 //                recipeToUpdate.getIngredients().clear();
 //                recipeToUpdate.getIngredients().addAll(updatedIngredients);
 //            }
-
 
             RecipeRepositoryModel recipeRepositoryModelReturned = recipeRepository.save(recipeToUpdate);
             return recipeRepositoryModelReturned != null;

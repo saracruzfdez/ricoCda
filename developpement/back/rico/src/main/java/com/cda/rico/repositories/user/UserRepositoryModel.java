@@ -31,10 +31,8 @@ public class UserRepositoryModel {
     private String email;
     @Column
     private String username;
-    // @Enumerated(EnumType.STRING) // Specifies Enum as a string
     @Column
     private String role;
-    // @Enumerated(EnumType.STRING) // Specifies Enum as a string
     @Column
     private String gender;
 

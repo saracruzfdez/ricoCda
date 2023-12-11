@@ -1,0 +1,11 @@
+.scf-recipes-navbar-margin{
+    margin-top: 90px;
+}
+
+.scf-recipes-menu{
+    text-decoration: none !important; 
+}
+
+.scf-a-link.active {
+    font-weight: bold; /* Puedes agregar estilos adicionales según tus necesidades */
+  }
