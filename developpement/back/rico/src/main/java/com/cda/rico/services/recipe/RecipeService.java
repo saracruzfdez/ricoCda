@@ -6,7 +6,6 @@ import com.cda.rico.repositories.ingredient.IngredientRepositoryModel;
 import com.cda.rico.repositories.recipe.RecipeRepository;
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 
-import com.cda.rico.repositories.step.StepRepositoryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +39,6 @@ public class RecipeService {
             stepRepositoryModel.setRecipeRepositoryModel(recipeRepositoryModel);
         }*/
 
-
         // Save the recipe in the database
         RecipeRepositoryModel recipeRepositoryModelReturned = recipeRepository.save(recipeRepositoryModel);
 
@@ -49,15 +47,14 @@ public class RecipeService {
         ))).toList();
         // Return true if the recipe was successfully saved
         return recipeRepositoryModelReturned != null;
+
+        ///////////////////////////////////////////////////
+        // HACER LO MISMO PARA LOS PASOS !!!
+        // ACABAR DE UPDATE LAS LISTAS INGREDIENTES Y PASOS
+        ///////////////////////////////////////////////////
+
     }
 
-    public void deleteById(int id) {recipeRepository.deleteById(id);}
-
-    public List<RecipeServiceModel> getAll(){
-        List<RecipeRepositoryModel> recipeRepositoryModels = (List<RecipeRepositoryModel>) recipeRepository.findAll();
-        return recipeRepositoryModels.stream()
-                .map(RecipeMapper.INSTANCE::repositoryToService).toList();
-    }
 
     public boolean update(int id, RecipeServiceModel updatedRecipe) {
 
@@ -97,5 +94,20 @@ public class RecipeService {
         } else {
             return false;
         }
+    }
+
+
+
+
+    public void deleteById(int id) {recipeRepository.deleteById(id);}
+
+
+
+
+
+    public List<RecipeServiceModel> getAll(){
+        List<RecipeRepositoryModel> recipeRepositoryModels = (List<RecipeRepositoryModel>) recipeRepository.findAll();
+        return recipeRepositoryModels.stream()
+                .map(RecipeMapper.INSTANCE::repositoryToService).toList();
     }
 }
