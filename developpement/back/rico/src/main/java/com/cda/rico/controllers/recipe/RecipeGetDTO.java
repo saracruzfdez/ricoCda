@@ -1,11 +1,12 @@
 package com.cda.rico.controllers.recipe;
 
-import com.cda.rico.controllers.ingredient.IngredientDTO;
-import com.cda.rico.controllers.step.StepDTO;
+import com.cda.rico.controllers.ingredient.IngredientGetDTO;
+import com.cda.rico.controllers.step.StepGetDTO;
 
 import java.util.List;
 
-public record RecipeDTO(
+public record RecipeGetDTO(
+        int id,
         String image_path,
         String category,
         String title,
@@ -15,7 +16,7 @@ public record RecipeDTO(
         String difficulty,
         String average_cost,
         String country_origin,
-        List<IngredientDTO> ingredients,
-        List<StepDTO> steps
+        List<IngredientGetDTO> ingredients,
+        List<StepGetDTO> steps
 ){
-}
+        }

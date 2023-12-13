@@ -6,6 +6,8 @@ import com.cda.rico.repositories.ingredient.IngredientRepositoryModel;
 import com.cda.rico.repositories.recipe.RecipeRepository;
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 
+import com.cda.rico.repositories.step.StepRepository;
+import com.cda.rico.repositories.step.StepRepositoryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class RecipeService {
 
     @Autowired
     private IngredientRepository ingredientRepository;
+    @Autowired
+    private StepRepository stepRepository;
 
     // Method to add a recipe
     public boolean add(RecipeServiceModel recipeServiceModel) {
@@ -27,35 +31,24 @@ public class RecipeService {
         // Map RecipeServiceModel to RecipeRepositoryModel
         RecipeRepositoryModel recipeRepositoryModel = RecipeMapper.INSTANCE.serviceToRepository(recipeServiceModel);
 
-        /*
-        for(IngredientRepositoryModel ingredientRepositoryModel : recipeRepositoryModel.getIngredients())
-        {
-            ingredientRepositoryModel.setRecipeRepositoryModel(recipeRepositoryModel);
-        }
-
-        // Iterate through the list of steps in the recipeRepositoryModel
-        for (StepRepositoryModel stepRepositoryModel : recipeRepositoryModel.getSteps()) {
-            // Set the recipeRepositoryModel for each step in the loop
-            stepRepositoryModel.setRecipeRepositoryModel(recipeRepositoryModel);
-        }*/
-
         // Save the recipe in the database
         RecipeRepositoryModel recipeRepositoryModelReturned = recipeRepository.save(recipeRepositoryModel);
 
         recipeRepositoryModelReturned.getIngredients().stream().map((x) -> ingredientRepository.save(new IngredientRepositoryModel(
                 x.getId(), x.getName(), x.getQuantity(), x.getUnit(),recipeRepositoryModel
         ))).toList();
+
+        recipeRepositoryModelReturned.getSteps().stream().map((x) -> stepRepository.save(new StepRepositoryModel(x.getId(), x.getName(), x.getDescription(), recipeRepositoryModel))).toList();
+
         // Return true if the recipe was successfully saved
         return recipeRepositoryModelReturned != null;
-
-        ///////////////////////////////////////////////////
-        // HACER LO MISMO PARA LOS PASOS !!!
-        // ACABAR DE UPDATE LAS LISTAS INGREDIENTES Y PASOS
-        ///////////////////////////////////////////////////
-
     }
 
 
+
+    ///////////////////////////////////////////////////
+    // ACABAR DE UPDATE LAS LISTAS INGREDIENTES Y PASOS
+    ///////////////////////////////////////////////////
     public boolean update(int id, RecipeServiceModel updatedRecipe) {
 
         // Convert the updatedRecipe from a service model to a repository model
@@ -98,16 +91,20 @@ public class RecipeService {
 
 
 
-
     public void deleteById(int id) {recipeRepository.deleteById(id);}
-
-
-
-
 
     public List<RecipeServiceModel> getAll(){
         List<RecipeRepositoryModel> recipeRepositoryModels = (List<RecipeRepositoryModel>) recipeRepository.findAll();
         return recipeRepositoryModels.stream()
                 .map(RecipeMapper.INSTANCE::repositoryToService).toList();
+    }
+
+    public RecipeServiceModel getById(int id) {
+        Optional<RecipeRepositoryModel> recipeRepositoryModelOptional = recipeRepository.findById(id);
+        if (recipeRepositoryModelOptional.isPresent()){
+            return RecipeMapper.INSTANCE.repositoryToService(recipeRepositoryModelOptional.get());
+        } else {
+            return null;
+        }
     }
 }

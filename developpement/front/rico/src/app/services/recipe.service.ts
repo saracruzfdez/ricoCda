@@ -2,6 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
+export interface Ingredient {
+  id: number;
+  name: string;
+  quantity: number;
+  unit: string;
+}
+
+export interface Step {
+  id: number;
+  name: string;
+  description: string;
+}
+
 export interface Recipe {
   id?: number;
   image_path: string;
@@ -13,8 +26,8 @@ export interface Recipe {
   difficulty: string;
   average_cost: string;
   country_origin: string;
-  ingredients: [];
-  step: [];
+  ingredients: Ingredient[];
+  steps: Step[];
 }
 
 @Injectable({
@@ -28,6 +41,18 @@ export class RecipeService {
   getAll(): Observable<Array<Recipe>> {
     return this.http.get('http://localhost:9000/recipes') as Observable<Array<Recipe>>;
   }
+
+  getById(id: number): Observable<Recipe> | null {
+    if (id === null) {
+      return null;
+    }
+    return this.http.get(`http://localhost:9000/recipes/${id}`) as Observable<Recipe>;
+  }
+
+  add(newRecipe: Recipe): Observable<Recipe> {
+    return this.http.post('http://localhost:9000/recipes', newRecipe) as Observable<Recipe>;
+  }
+
     // // Función para obtener los encabezados con el token JWT
     // private getHeaders(): HttpHeaders {
     //   const token = sessionStorage.getItem('token');

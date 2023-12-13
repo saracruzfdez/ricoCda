@@ -1,0 +1,33 @@
+<div class="container scf-recipe-navbar-margin d-flex pt-3 pb-2">
+    <a
+        class="p-2 link-dark link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover scf-recipe-menu"
+        routerLink="/recipes"
+        > Retour aux recettes
+    </a>
+</div>
+
+<div class="container w-50 pt-3 pb-2">
+    <div *ngIf="recipe" class="card mb-3">
+        <img class="card-img-top" [src]="recipe.image_path" alt="{{ recipe.title }}">
+        <div class="card-body p-5">
+
+            <div class="d-flex">
+                <p class="scf-recipe-title">{{ recipe.category }}</p>
+                <h5 class="card-title">{{ recipe.title }}</h5>
+            </div>
+
+            <p>Temps de préparation : {{ recipe.prep_time }} minutes || Temps de cuisson : {{ recipe.cook_time }} minutes || {{ recipe.persons_number }} personnes || {{ recipe.difficulty }} || {{ recipe.average_cost }} || {{ recipe.country_origin }}</p>
+          
+
+            <h5>Ingredients</h5>
+            <ul>
+                <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient.quantity }} {{ ingredient.unit }} {{ ingredient.name }}</li>
+            </ul>
+
+            <h5>Steps</h5>
+            <ul>
+                <li *ngFor="let step of recipe.steps">{{ step.name }} : {{ step.description }}</li>
+            </ul>  
+        </div>
+    </div>
+</div>   

@@ -1,6 +1,7 @@
 package com.cda.rico.mappers;
 
 import com.cda.rico.controllers.recipe.RecipeDTO;
+import com.cda.rico.controllers.recipe.RecipeGetDTO;
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 import com.cda.rico.services.recipe.RecipeServiceModel;
 import org.mapstruct.Mapper;
@@ -19,7 +20,10 @@ public interface RecipeMapper {
     //GET
     RecipeServiceModel repositoryToService(RecipeRepositoryModel recipeRepositoryModel);
 
-    RecipeDTO recipeServiceModelToDTO(RecipeServiceModel recipeServiceModel);
+    RecipeGetDTO recipeServiceModelToDTO(RecipeServiceModel recipeServiceModel);
+
+    RecipeServiceModel dtoGetToServiceModel (RecipeGetDTO recipeGetDTO);
+
 
 
 }

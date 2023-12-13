@@ -5,9 +5,9 @@ import com.cda.rico.repositories.recipe.RecipeRepository;
 import com.cda.rico.services.recipe.RecipeService;
 import com.cda.rico.services.recipe.RecipeServiceModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,20 +30,33 @@ public class RecipeController {
         recipeRepository.deleteById(id);
     }
 
+
+
+    ///////////////////////////////////////////////////
+    // ACABAR DE UPDATE LAS LISTAS INGREDIENTES Y PASOS
+    ///////////////////////////////////////////////////
     @PutMapping("/{id}")
-    public boolean update(@PathVariable int id, @RequestBody RecipeDTO updatedRecipeDTO){
-        RecipeServiceModel updatedRecipeServiceModel = RecipeMapper.INSTANCE.dtoToServiceModel(updatedRecipeDTO);
+    public boolean update(@PathVariable int id, @RequestBody RecipeGetDTO updatedRecipeDTO){
+        RecipeServiceModel updatedRecipeServiceModel = RecipeMapper.INSTANCE.dtoGetToServiceModel(updatedRecipeDTO);
         recipeService.update(id, updatedRecipeServiceModel);
 
         return updatedRecipeServiceModel != null;
     }
 
+
+
     @GetMapping
-    public List<RecipeDTO> getAll(){
+    public List<RecipeGetDTO> getAll(){
         List<RecipeServiceModel> recipeServiceModels = recipeService.getAll();
         return recipeServiceModels.stream()
                 .map(RecipeMapper.INSTANCE::recipeServiceModelToDTO)
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    public RecipeGetDTO getById(@PathVariable int id){
+        RecipeServiceModel recipeServiceModel = recipeService.getById(id);
+            RecipeGetDTO recipeGetDTO = RecipeMapper.INSTANCE.recipeServiceModelToDTO(recipeServiceModel);
+            return recipeGetDTO;
+    }
 }
