@@ -1,105 +1,311 @@
 <app-recipes-nav></app-recipes-nav>
+<div class="container w-50 bg-white p-5">
+    <h5>Nouvelle recette</h5>
+    <form
+        [formGroup]="recipesForm"
+        (ngSubmit)="submitForm(); recipesForm.reset()"
+        novalidate
+    >
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="image_path"
+            >
+                Image
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">Vous devez entrer un chemin d'image</small>
+            </div>
+            <input
+                type="text"
+                formControlName="image_path"
+                placeholder="Entrez un chemin pour votre image"
+                class="form-control mb-3"
+            >
+        </div>
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="category"
+            >
+                Catégorie
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">Vous devez entrer une catégorie</small>
+            </div>
+            <select
+                formControlName="category"
+                class="form-select mb-3"
+                title="Choisissez une catégorie"
+            >
+                <option disabled>Choisissez une catégorie</option>
+                <option
+                    *ngFor="let category of categories"
+                    [value]="category"
+                >
+                    {{ category }}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="title"
+            >
+                Titre
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">Vous devez entrer un titre</small>
+            </div>
+            <input
+                type="text"
+                formControlName="title"
+                placeholder="Entrez un titre"
+                class="form-control mb-3"
+            >
+        </div>
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="prep_time"
+            >
+                Temps de préparation
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">
+                    Vous devez entrer un temps de préparation
+                </small>
+            </div>
+            <input
+                type="number"
+                formControlName="prep_time"
+                placeholder="Entrez un temps de préparation"
+                class="form-control mb-3"
+            >
+        </div>
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="cook_time"
+            >
+                Temps de cuisson
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">Vous devez entrer un temps de cuisson</small>
+            </div>
+            <input
+                type="number"
+                formControlName="cook_time"
+                placeholder="Entrez un temps de cuisson"
+                class="form-control mb-3"
+            >
+        </div>
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="persons_number"
+            >
+                Nombre de personnes
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">
+                    Vous devez entrer un nombre de personnes
+                </small>
+            </div>
+            <input
+                type="number"
+                formControlName="persons_number"
+                placeholder="Entrez un nombre de personnes"
+                class="form-control mb-3"
+            >
+        </div>
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="difficulty"
+            >
+                Niveau de difficulté
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">
+                    Vous devez entrer un niveau de difficulté
+                </small>
+            </div>
+            <select
+                formControlName="difficulty"
+                class="form-select mb-3"
+                title="Choisissez un niveau de difficulté"
+            >
+                <option disabled>Choisissez un niveau de difficulté</option>
+                <option
+                    *ngFor="let difficulty of difficulties"
+                    [value]="difficulty"
+                >
+                    {{ difficulty }}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="average_cost"
+            >
+                Coût moyen
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">Vous devez entrer un coût moyen</small>
+            </div>
+            <select
+                formControlName="average_cost"
+                class="form-select mb-3"
+                title="Choisissez un coût moyen"
+            >
+                <option disabled>Choisissez un coût moyen</option>
+                <option
+                    *ngFor="let cost of costs"
+                    [value]="cost"
+                >
+                    {{ cost }}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label
+                class="mb-1"
+                for="country_origin"
+            >
+                Pays d'origine
+            </label>
+            <div *ngIf="submitted && recipesForm.invalid">
+                <small class="text-danger">Vous devez entrer un pays d'origine</small>
+            </div>
+            <input
+                type="text"
+                formControlName="country_origin"
+                placeholder="Entrez un pays d'origine"
+                class="form-control mb-3"
+            >
+        </div>
+        <div formArrayName="ingredients">
+            <div
+                *ngFor="let ingredient of ingredients?.controls; let i = index"
+                [formGroupName]="i"
+            >
+                <h6>Ingredient {{ i + 1 }}</h6>
+                <label
+                    class="mb-1"
+                    for="name"
+                >
+                    Nom
+                </label>
+                <div *ngIf="submitted && recipesForm.invalid">
+                    <small class="text-danger">Vous devez entrer un nom</small>
+                </div>
+                <input
+                    type="text"
+                    formControlName="name"
+                    placeholder="Entrez un nom"
+                    class="form-control mb-3"
+                >
+                <label
+                    class="mb-1"
+                    for="quantity"
+                >
+                    Quantité
+                </label>
+                <div *ngIf="submitted && recipesForm.invalid">
+                    <small class="text-danger">Vous devez entrer une quantité</small>
+                </div>
+                <input
+                    type="number"
+                    formControlName="quantity"
+                    placeholder="Entrez une quantité"
+                    class="form-control mb-3"
+                >
+                <label
+                    class="mb-1"
+                    for="unit"
+                >
+                    Unité
+                </label>
+                <div *ngIf="submitted && recipesForm.invalid">
+                    <small class="text-danger">Vous devez entrer une unité de mesure</small>
+                </div>
+                
+                <select
+                    formControlName="unit"
+                    class="form-select mb-3"
+                    title="Choisissez une unité de mesure"
+                >
+                    <option disabled>Choisissez une unité de mesure</option>
+                    <option
+                        *ngFor="let unit of unities"
+                        [value]="unit"
+                    >
+                        {{ unit }}
+                    </option>
+                </select>
 
-<div class="container w-50 bg-white pt-3 pb-2">
 
-<form [formGroup]="recipesForm" (ngSubmit)="submitForm()">
+            </div>
+            <button
+                type="button"
+                (click)="addIngredient()"
+                class="btn btn-danger mb-3"
+            >
+                +
+            </button>
+        </div>
+        <div formArrayName="steps">
+            <div
+                *ngFor="let step of steps?.controls; let i = index"
+                [formGroupName]="i"
+            >
+                <h6>Step {{ i + 1 }}</h6>
+                <label
+                    class="mb-1"
+                    for="name"
+                >
+                    Nom
+                </label>
+                <div *ngIf="submitted && recipesForm.invalid">
+                    <small class="text-danger">Vous devez entrer un nom</small>
+                </div>
+                <input
+                    type="text"
+                    formControlName="name"
+                    placeholder="Entrez un nom"
+                    class="form-control mb-3"
+                >
+                <label
+                    class="mb-1"
+                    for="description"
+                >
+                    Description
+                </label>
 
-  <div class="form-group">
-  <label for="image_path">Image</label>
-    <input type="text" formControlName="image_path" placeholder="Entrez un chemin pour votre image" class="form-control">
-    <div *ngIf="recipesForm.get('image_path')?.hasError('required') && !recipesForm.get('image_path')?.valid">
-    <small class="text-danger">Vous devez entrer un chemin d'image</small>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="category">Categorie</label>
-    <input type="text" formControlName="category" placeholder="Entrez une categorie" class="form-control">
-    <div *ngIf="recipesForm.get('category')?.hasError('required') && !recipesForm.get('category')?.valid">
-    <small class="text-danger">Vous devez entrer une categorie.</small>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="title">Titre</label>
-    <input type="text" formControlName="title" placeholder="Entrez un titre" class="form-control">
-    <div *ngIf="recipesForm.get('title')?.hasError('required') && !recipesForm.get('title')?.valid">
-      <small class="text-danger">Vous devez entrer un titre.</small>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="prep_time">Temps de préparation</label>
-    <input type="number" formControlName="prep_time" placeholder="Entrez un temps de préparation" class="form-control">
-    <div *ngIf="recipesForm.get('prep_time')?.hasError('required') && !recipesForm.get('prep_time')?.valid">
-      <small class="text-danger">Vous devez entrer un temps de préparation.</small>
-    </div>
-  </div>
-
-
-    <input type="number" formControlName="cook_time" placeholder="Temps de cuisson" class="form-control">
-    <div *ngIf="recipesForm.get('cook_time')?.hasError('required') && !recipesForm.get('cook_time')?.valid">
-      <small class="text-danger">Vous devez entrer un temps de cuisson.</small>
-    </div>
-    <input type="number" formControlName="persons_number" placeholder="Nombre de personnes" class="form-control">
-    <div *ngIf="recipesForm.get('persons_number')?.hasError('required') && !recipesForm.get('persons_number')?.valid">
-      <small class="text-danger">Vous devez entrer un nombre de personnes.</small>
-    </div>
-    <input type="text" formControlName="difficulty" placeholder="Difficulté" class="form-control">
-    <div *ngIf="recipesForm.get('difficulty')?.hasError('required') && !recipesForm.get('difficulty')?.valid">
-      <small class="text-danger">Vous devez entrer un niveau de difficulté.</small>
-    </div>
-    <input type="text" formControlName="average_cost" placeholder="Coût" class="form-control">
-    <div *ngIf="recipesForm.get('average_cost')?.hasError('required') && !recipesForm.get('average_cost')?.valid">
-      <small class="text-danger">Vous devez entrer un coût moyen.</small>
-    </div>
-    <input type="text" formControlName="country_origin" placeholder="Pays d'origine" class="form-control">
-    <div *ngIf="recipesForm.get('country_origin')?.hasError('required') && !recipesForm.get('country_origin')?.valid">
-      <small class="text-danger">Vous devez entrer un pays d'origine.</small>
-    </div>
-
-
-  
-  <div formArrayName="ingredients">
-    <div *ngFor="let ingredient of ingredients?.controls; let i = index" [formGroupName]="i">
-      <h6>Ingredient {{ i + 1 }}</h6>
-      <input type="text" formControlName="name" placeholder="Name" class="form-control">
-      <div *ngIf="ingredient.get('name')?.hasError('required') && !recipesForm.get('name')?.valid">
-        <small class="text-danger">Vous devez entrer un nom.</small>
-      </div>
-      <input type="number" formControlName="quantity" placeholder="Quantity" class="form-control">
-      <div *ngIf="ingredient.get('quantity')?.hasError('required') && !recipesForm.get('quantity')?.valid">
-        <small class="text-danger">Vous devez entrer un chiffre.</small>
-      </div>
-      <input type="text" formControlName="unit" placeholder="Unit" class="form-control">
-      <div *ngIf="ingredient.get('unit')?.hasError('required') && !recipesForm.get('unit')?.valid">
-        <small class="text-danger">Vous devez entrer une unité de mesure.</small>
-      </div>
-    </div>
-    <button type="button" (click)="addIngredient()" class="btn btn-primary">Add Ingredient</button>
-  </div>
-
-
-
-
-
-
-  <div formArrayName="steps">
-    <div *ngFor="let step of steps?.controls; let i = index" [formGroupName]="i">
-      <h6>Step {{ i + 1 }}</h6>
-      <input type="text" formControlName="name" placeholder="Name" class="form-control">
-      <div *ngIf="step.get('name')?.hasError('required') && step.get('name')?.touched">
-        <small class="text-danger">You must enter a name for the step.</small>
-      </div>
-
-      <textarea formControlName="description" placeholder="Description" class="form-control"></textarea>
-      <div *ngIf="step.get('description')?.hasError('required') && step.get('description')?.touched">
-        <small class="text-danger">You must enter a description for the step.</small>
-      </div>
-    </div>
-    <button type="button" (click)="addStep()" class="btn btn-primary">Add Step</button>
-  </div>
-  <button type="submit" class="btn btn-success">Submit</button>
-</form>
-
+                <div *ngIf="submitted && recipesForm.invalid">
+                    <small class="text-danger">Vous devez entrer une description</small>
+                </div>
+                <textarea
+                    formControlName="description"
+                    placeholder="Entrez une description"
+                    class="form-control mb-3"
+                ></textarea>
+            </div>
+            <button
+                type="button"
+                (click)="addStep()"
+                class="btn btn-danger mb-3"
+            >
+                +
+            </button>
+        </div>
+        <button
+            type="submit"
+            class="btn btn-outline-danger"
+        >
+            Envoyer
+        </button>
+    </form>
 </div>

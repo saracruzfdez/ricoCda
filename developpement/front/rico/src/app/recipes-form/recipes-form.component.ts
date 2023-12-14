@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Recipe, RecipeService } from '../services/recipe.service';
 import { Router } from '@angular/router';
+import { CategoryEnum, CategoryService } from '../services/category.service';
+import { AverageCostEnum, CostService } from '../services/cost.service';
+import { DifficultyEnum, DifficultyService } from '../services/difficulty.service';
+import { UnitEnum, UnitService } from '../services/unit.service';
 
 @Component({
   selector: 'app-recipes-form',
@@ -12,17 +16,22 @@ import { Router } from '@angular/router';
 export class RecipesFormComponent implements OnInit {
 
   recipesForm: FormGroup;
+  categories: (CategoryEnum | string)[] = [];
+  costs: (AverageCostEnum | string)[] = [];
+  difficulties: (DifficultyEnum | string)[] = [];
+  unities: (UnitEnum | string)[] = [];
 
-  constructor(private recipeService: RecipeService, private router: Router, private fb: FormBuilder) {
+  constructor(private recipeService: RecipeService, private categoryService: CategoryService, private costService: CostService, private difficultyService: DifficultyService, private unitService: UnitService, private router: Router, private fb: FormBuilder) {
+
     this.recipesForm = this.fb.group({
       image_path: ['', Validators.required],
-      category: ['', Validators.required],
+      category: [null, Validators.required],
       title: ['', Validators.required],
       prep_time: [null, Validators.required],
       cook_time: [null, Validators.required],
       persons_number: [null, Validators.required],
-      difficulty: ['', Validators.required],
-      average_cost: ['', Validators.required],
+      difficulty: [null, Validators.required],
+      average_cost: [null, Validators.required],
       country_origin: ['', Validators.required],
       ingredients: this.fb.array([this.createIngredient()]),
       steps: this.fb.array([this.createStep()])
@@ -30,6 +39,41 @@ export class RecipesFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.categoryService.getCategories().subscribe(
+      (data) => {
+        this.categories = data;
+      },
+      (error) => {
+        console.error('Error fetching categories', error);
+      }
+    );
+
+    this.costService.getCosts().subscribe(
+      (data) => {
+        this.costs = data;
+      },
+      (error) => {
+        console.error('Error fetching costs', error);
+      }
+    );
+
+    this.difficultyService.getDifficulties().subscribe(
+      (data) => {
+        this.difficulties = data;
+      },
+      (error) => {
+        console.error('Error fetching difficulties', error);
+      }
+    );
+    this.unitService.getUnities().subscribe(
+      (data) => {
+        this.unities = data;
+      },
+      (error) => {
+        console.error('Error fetching unities', error);
+      }
+    );
   }
 
   get ingredients() {
@@ -44,7 +88,7 @@ export class RecipesFormComponent implements OnInit {
     return this.fb.group({
       name: ['', Validators.required],
       quantity: [null, Validators.required],
-      unit: ['', Validators.required]
+      unit: [null, Validators.required]
     });
   }
 
@@ -69,7 +113,12 @@ export class RecipesFormComponent implements OnInit {
     }
   }
 
+  submitted = false;
+
   submitForm() {
+
+    this.submitted = true;
+
     const recipesForm = this.recipesForm;
     if (!recipesForm) {
       console.error('recipesForm is null');
@@ -94,5 +143,7 @@ export class RecipesFormComponent implements OnInit {
         console.error('Error adding recipe:', error);
       }
     );
+
+
   }
 }
