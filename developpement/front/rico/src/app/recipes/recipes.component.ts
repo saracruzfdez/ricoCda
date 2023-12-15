@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
 
+
 @Component({
   selector: 'app-recipes',
   templateUrl: './recipes.component.html',
@@ -9,6 +10,7 @@ import { RecipeService } from '../services/recipe.service';
 export class RecipesComponent implements OnInit {
 
 recipes:any
+isEditing: boolean = false;
 
 constructor(private recipeService: RecipeService) { }
 
@@ -23,7 +25,11 @@ ngOnInit() {
     }));
 
     console.log("Getting data after replace:", this.recipes);
+
   });
+  
+  
 }
+
 }
 

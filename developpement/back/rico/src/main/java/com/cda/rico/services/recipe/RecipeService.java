@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -44,11 +45,6 @@ public class RecipeService {
         return recipeRepositoryModelReturned != null;
     }
 
-
-
-    ///////////////////////////////////////////////////
-    // ACABAR DE UPDATE LAS LISTAS INGREDIENTES Y PASOS
-    ///////////////////////////////////////////////////
     public boolean update(int id, RecipeServiceModel updatedRecipe) {
 
         // Convert the updatedRecipe from a service model to a repository model
@@ -73,23 +69,63 @@ public class RecipeService {
             recipeToUpdate.setAverage_cost(updatedRecipe.getAverage_cost().toString());
             recipeToUpdate.setCountry_origin(updatedRecipe.getCountry_origin());
 
-//            // Update ingredients list
-//            List<IngredientServiceModel> updatedIngredients = updatedRecipe.getIngredients();
-//            if (updatedIngredients != null) {
-//                // Limpiar la lista existente y agregar los nuevos ingredientes
-//                recipeToUpdate.getIngredients().clear();
-//                recipeToUpdate.getIngredients().addAll(updatedIngredients);
-//            }
+// Update ingredients list
+            List<IngredientRepositoryModel> updatedIngredients = updatedRecipe.getIngredients().stream()
+                    .map(ingredient -> {
+                        // Buscar ingredientes existentes por nombre
+                        Optional<IngredientRepositoryModel> existingIngredientOptional = recipeToUpdate.getIngredients().stream()
+                                .filter(existingIngredient -> existingIngredient.getName().equals(ingredient.getName()))
+                                .findFirst();
 
+                        if (existingIngredientOptional.isPresent()) {
+                            // Si existe, actualizar el ingrediente existente
+                            IngredientRepositoryModel existingIngredient = existingIngredientOptional.get();
+                            existingIngredient.setQuantity(ingredient.getQuantity());
+                            existingIngredient.setUnit(ingredient.getUnit().toString());
+                            return existingIngredient;
+                        } else {
+                            // Si no existe, crear un nuevo ingrediente
+                            return new IngredientRepositoryModel(
+                                    ingredient.getId(), ingredient.getName(), ingredient.getQuantity(),
+                                    ingredient.getUnit().toString(), recipeToUpdate
+                            );
+                        }
+                    })
+                    .collect(Collectors.toList());
+
+            recipeToUpdate.setIngredients(updatedIngredients);
+
+// Update steps list
+            List<StepRepositoryModel> updatedSteps = updatedRecipe.getSteps().stream()
+                    .map(step -> {
+                        // Buscar pasos existentes por nombre
+                        Optional<StepRepositoryModel> existingStepOptional = recipeToUpdate.getSteps().stream()
+                                .filter(existingStep -> existingStep.getName().equals(step.getName()))
+                                .findFirst();
+
+                        if (existingStepOptional.isPresent()) {
+                            // Si existe, actualizar el paso existente
+                            StepRepositoryModel existingStep = existingStepOptional.get();
+                            existingStep.setName(step.getName());
+                            existingStep.setDescription(step.getDescription());
+                            return existingStep;
+                        } else {
+                            // Si no existe, crear un nuevo paso
+                            return new StepRepositoryModel(step.getId(), step.getName(), step.getDescription(), recipeToUpdate);
+                        }
+                    })
+                    .collect(Collectors.toList());
+
+            recipeToUpdate.setSteps(updatedSteps);
+
+            // Save the updated recipe to the database
             RecipeRepositoryModel recipeRepositoryModelReturned = recipeRepository.save(recipeToUpdate);
             return recipeRepositoryModelReturned != null;
 
         } else {
-            return false;
+            return false; // Recipe not found
         }
     }
-
-
 
     public void deleteById(int id) {recipeRepository.deleteById(id);}
 

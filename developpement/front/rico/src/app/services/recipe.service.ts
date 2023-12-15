@@ -53,6 +53,11 @@ export class RecipeService {
     return this.http.post('http://localhost:9000/recipes', newRecipe) as Observable<Recipe>;
   }
 
+  update(id: number, updatedRecipe: Recipe): Observable<Recipe> {
+    const url = `http://localhost:9000/recipes/${id}`;
+    return this.http.put(url, updatedRecipe) as Observable<Recipe>;
+  }
+
     // // Función para obtener los encabezados con el token JWT
     // private getHeaders(): HttpHeaders {
     //   const token = sessionStorage.getItem('token');
@@ -66,4 +71,5 @@ export class RecipeService {
     //   console.error('Error en la solicitud:', error);
     //   return throwError(error);
     // }
+    
 }

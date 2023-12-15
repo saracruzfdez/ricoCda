@@ -18,7 +18,6 @@ public class RecipeController {
     private RecipeService recipeService;
     @Autowired
     private RecipeRepository recipeRepository;
-
     @PostMapping
     public boolean addRecipeToBdd(@RequestBody RecipeDTO recipeDTO){
         RecipeServiceModel recipeServiceModel = RecipeMapper.INSTANCE.dtoToServiceModel(recipeDTO);
@@ -29,12 +28,6 @@ public class RecipeController {
     public void deleteById(@PathVariable int id){
         recipeRepository.deleteById(id);
     }
-
-
-
-    ///////////////////////////////////////////////////
-    // ACABAR DE UPDATE LAS LISTAS INGREDIENTES Y PASOS
-    ///////////////////////////////////////////////////
     @PutMapping("/{id}")
     public boolean update(@PathVariable int id, @RequestBody RecipeGetDTO updatedRecipeDTO){
         RecipeServiceModel updatedRecipeServiceModel = RecipeMapper.INSTANCE.dtoGetToServiceModel(updatedRecipeDTO);
@@ -42,9 +35,6 @@ public class RecipeController {
 
         return updatedRecipeServiceModel != null;
     }
-
-
-
     @GetMapping
     public List<RecipeGetDTO> getAll(){
         List<RecipeServiceModel> recipeServiceModels = recipeService.getAll();
@@ -52,7 +42,6 @@ public class RecipeController {
                 .map(RecipeMapper.INSTANCE::recipeServiceModelToDTO)
                 .collect(Collectors.toList());
     }
-
     @GetMapping("/{id}")
     public RecipeGetDTO getById(@PathVariable int id){
         RecipeServiceModel recipeServiceModel = recipeService.getById(id);

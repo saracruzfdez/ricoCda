@@ -13,7 +13,8 @@ const routes: Routes = [
   {path:'shopping-list', component:ShoppingListComponent},
   {path:'own-recipes', component:OwnRecipesComponent},
   {path:'recipes-form', component:RecipesFormComponent},
-  {path: 'recipe/:id', component:RecipeComponent}
+  {path:'recipes-form/:id', component:RecipesFormComponent},
+  {path:'recipe/:id', component:RecipeComponent}
 ];
 
 @NgModule({
