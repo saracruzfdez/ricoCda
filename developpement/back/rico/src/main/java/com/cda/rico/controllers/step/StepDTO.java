@@ -1,4 +1,4 @@
 package com.cda.rico.controllers.step;
 
-public class StepDTO {
+public record StepDTO (int id, String name, String description, int recipe_id){
 }

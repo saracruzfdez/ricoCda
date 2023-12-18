@@ -1,6 +1,5 @@
 package com.cda.rico.repositories.recipe;
 
-import com.cda.rico.enums.CategoryEnum;
 import com.cda.rico.repositories.ingredient.IngredientRepositoryModel;
 import com.cda.rico.repositories.menu.MenuRepositoryModel;
 import com.cda.rico.repositories.rating.RatingRepositoryModel;

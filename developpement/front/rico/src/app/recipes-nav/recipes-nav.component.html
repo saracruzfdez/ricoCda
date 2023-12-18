@@ -1,0 +1,20 @@
+<div class="container scf-recipes-navbar-margin d-flex pt-3 pb-2">
+
+    <a
+        class="p-2 link-dark link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover scf-recipes-menu scf-a-link"
+        [class.active]="isActive('/own-recipes')"
+        routerLink="/own-recipes"
+        >
+        Tes recettes
+    </a>
+
+    <a
+        class="p-2 link-dark link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover scf-recipes-menu scf-a-link"
+        [class.active]="isActive('/recipes-form')"
+        routerLink="/recipes-form"
+
+    >
+        Ajout de recette
+    </a>
+
+</div>
