@@ -1,8 +1,8 @@
 package com.cda.rico.repositories.menu;
 
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
+import com.cda.rico.repositories.security.Owner;
 import com.cda.rico.repositories.shopping_list_ingredient.ShoppingListIngredientRepositoryModel;
-import com.cda.rico.repositories.user.UserRepositoryModel;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +26,7 @@ public class MenuRepositoryModel {
     //Relationship
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserRepositoryModel userRepositoryModel;
+    private Owner user;
 
     @ManyToMany
     @JoinTable(

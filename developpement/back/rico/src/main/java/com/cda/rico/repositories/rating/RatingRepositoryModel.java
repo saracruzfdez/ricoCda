@@ -1,7 +1,7 @@
 package com.cda.rico.repositories.rating;
 
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
-import com.cda.rico.repositories.user.UserRepositoryModel;
+import com.cda.rico.repositories.security.Owner;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class RatingRepositoryModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "user_id")
-    private UserRepositoryModel userRepositoryModel;
+    private Owner user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")

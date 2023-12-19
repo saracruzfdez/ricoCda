@@ -1,6 +1,6 @@
 package com.cda.rico.repositories.recovery_password;
 
-import com.cda.rico.repositories.user.UserRepositoryModel;
+import com.cda.rico.repositories.security.Owner;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +22,5 @@ public class RecoveryPasswordRepositoryModel {
     // Relationship
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
-    private UserRepositoryModel userRepositoryModel;
+    private Owner user;
 }
