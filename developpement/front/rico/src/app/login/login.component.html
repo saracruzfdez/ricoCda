@@ -1,0 +1,73 @@
+<div
+    class="container bg-white"
+    style="margin-top:90px; position: relative;"
+>
+
+    <div class="p-3">
+        <form
+            form
+            #formAuth="ngForm"
+            (ngSubmit)="loggedIn(formAuth)"
+            class="m-auto p-3 w-75 border"
+        >
+
+            <h4 class="pb-2">Connectez-vous :</h4>
+
+            <div class="mb-3">
+                <label
+                    for="username"
+                    class="form-label"
+                >
+                    Login name
+                </label>
+                <input
+                    type="text"
+                    ngModel
+                    name="username"
+                    class="form-control"
+                    id="username"
+                    aria-describedby="emailHelp"
+                >
+                <div
+                    id="emailHelp"
+                    class="username"
+                >
+                    We'll never share your email with anyone else.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label
+                    for="password"
+                    class="form-label"
+                >
+                    Password
+                </label>
+                <input
+                    type="password"
+                    ngModel
+                    name="password"
+                    class="form-control"
+                    id="password"
+                >
+                <div class="pt-1">
+                    <a
+                        routerLink="/recuperation"
+                        class="text-danger"
+                    >
+                        Mot de passe oublié ?
+                    </a>
+                </div>
+            </div>
+            <button
+                type="submit"
+                class="btn btn-danger btn-sm"
+            >
+                Envoyer
+            </button>
+        </form>
+        <div class="pt-3 text-center">
+            Pas encore inscrit ?
+            <a routerLink="/inscription">Inscrivez-vous !</a>
+        </div>
+    </div>
+</div>

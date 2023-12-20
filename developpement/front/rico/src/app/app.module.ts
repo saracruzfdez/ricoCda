@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,9 @@ import { OwnRecipesComponent } from './own-recipes/own-recipes.component';
 import { RecipesNavComponent } from './recipes-nav/recipes-nav.component';
 import { RecipesFormComponent } from './recipes-form/recipes-form.component';
 import { RecipeComponent } from './recipe/recipe.component';
+import { InscriptionComponent } from './inscription/inscription.component';
+import { LoginComponent } from './login/login.component';
+import { RecuperationComponent } from './recuperation/recuperation.component';
 
 @NgModule({
   declarations: [
@@ -26,13 +29,17 @@ import { RecipeComponent } from './recipe/recipe.component';
     OwnRecipesComponent,
     RecipesNavComponent,
     RecipesFormComponent,
-    RecipeComponent
+    RecipeComponent,
+    InscriptionComponent,
+    LoginComponent,
+    RecuperationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

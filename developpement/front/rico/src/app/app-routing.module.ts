@@ -6,6 +6,9 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { OwnRecipesComponent } from './own-recipes/own-recipes.component';
 import { RecipesFormComponent } from './recipes-form/recipes-form.component';
 import { RecipeComponent } from './recipe/recipe.component';
+import { InscriptionComponent } from './inscription/inscription.component';
+import { LoginComponent } from './login/login.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {path:'recipes', component:RecipesComponent},
@@ -14,7 +17,9 @@ const routes: Routes = [
   {path:'own-recipes', component:OwnRecipesComponent},
   {path:'recipes-form', component:RecipesFormComponent},
   {path:'recipes-form/:id', component:RecipesFormComponent},
-  {path:'recipe/:id', component:RecipeComponent}
+  {path:'recipe/:id', component:RecipeComponent},
+  {path:'inscription', component:InscriptionComponent},
+  {path:'login', component:LoginComponent},
 ];
 
 @NgModule({

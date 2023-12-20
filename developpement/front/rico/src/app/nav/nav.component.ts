@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -7,9 +8,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
-  constructor(private router: Router) { }
+  constructor(protected authService: AuthService) { }
+// Deconnexion
+logout(){
+  this.authService.doLogout();
+}
 
-  isActive(route: string): boolean {
-    return this.router.isActive(route, true);
-  }
 }

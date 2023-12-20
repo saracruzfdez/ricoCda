@@ -1,0 +1,85 @@
+
+<div class="container bg-white" style="margin-top:90px; position: relative;">
+    <div class="p-3">
+        <form
+            #form="ngForm"
+            class="m-auto p-3 w-75 border"
+        >
+
+            <h4 class="pb-2">Renseignez votre mot de passe :</h4>
+
+            <div class="mb-3">
+                <label
+                    for="exampleInputEmail1"
+                    class="form-label"
+                >
+                    Email address
+                </label>
+                <input
+                    type="email"
+                    ngModel
+                    name="username"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                >
+                <div
+                    id="emailHelp"
+                    class="form-text"
+                >
+                    We'll never share your email with anyone else.
+                </div>
+            </div>
+
+            <!-- Button trigger modal -->
+            <button
+                type="submit"
+                class="btn btn-danger btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+            >
+                Envoyer
+            </button>
+
+            <!-- Modal -->
+            <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5
+                                class="modal-title"
+                                id="exampleModalLabel"
+                            >
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            Un email de récupération de mot de passe vous a été envoyé !
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-outline-danger btn-sm"
+                                data-bs-dismiss="modal"
+
+                            >
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
