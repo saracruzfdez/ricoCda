@@ -3,7 +3,7 @@ package com.cda.rico.repositories.recipe;
 import com.cda.rico.repositories.ingredient.IngredientRepositoryModel;
 import com.cda.rico.repositories.menu.MenuRepositoryModel;
 import com.cda.rico.repositories.rating.RatingRepositoryModel;
-import com.cda.rico.repositories.security.Owner;
+import com.cda.rico.repositories.security.User;
 import com.cda.rico.repositories.step.StepRepositoryModel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -60,13 +60,13 @@ public class RecipeRepositoryModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Owner user;
+    private User user;
 
     @ManyToMany(mappedBy = "menuRecipes")
     private List<MenuRepositoryModel> menus = new ArrayList<>();
 
     @ManyToMany(mappedBy = "favoriteRecipes")
-    private List<Owner> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeRepositoryModel")
     Set<RatingRepositoryModel> ratings;

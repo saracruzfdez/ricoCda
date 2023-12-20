@@ -1,8 +1,9 @@
 package com.cda.rico.services.security.impl;
 
+import com.cda.rico.enums.RoleEnum;
 import com.cda.rico.exceptions.AccountExistsException;
-import com.cda.rico.repositories.security.Owner;
-import com.cda.rico.repositories.security.OwnerRepository;
+import com.cda.rico.repositories.security.User;
+import com.cda.rico.repositories.security.UserRepository;
 import com.cda.rico.services.security.JwtUserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,7 +23,7 @@ import java.util.Date;
 @Service
 public class JwtUserServiceImpl implements JwtUserService {
     @Autowired
-    private OwnerRepository ownerRepository;
+    private UserRepository userRepository;
 
     @Autowired
     AuthenticationConfiguration authenticationConfiguration;
@@ -37,7 +38,7 @@ public class JwtUserServiceImpl implements JwtUserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws
             UsernameNotFoundException {
-        Owner owner = ownerRepository.findByEmail(username);
+        User owner = userRepository.findByEmail(username);
         if (owner == null) {
             throw new UsernameNotFoundException("The owner could not be found");
         }
@@ -56,16 +57,29 @@ public class JwtUserServiceImpl implements JwtUserService {
 
     @Override
     public UserDetails save(String username, String password) throws AccountExistsException {
-        UserDetails existingUser = ownerRepository.findByEmail(username);
+        UserDetails existingUser = userRepository.findByEmail(username);
         if (existingUser != null) {
             throw new AccountExistsException();
         }
-        Owner owner = new Owner();
+        User owner = new User();
         owner.setEmail(username);
         owner.setPassword(passwordEncoder.encode(password));
-        ownerRepository.save(owner);
+        userRepository.save(owner);
         return owner;
+    }
 
+    @Override
+    public User saveUser(String gender, String username, String password) throws AccountExistsException {
+        User existingUser = userRepository.findByEmail(username);
+        if (existingUser != null) {
+            throw new AccountExistsException();
+        }
+        User user = new User();
+        user.setRole(RoleEnum.USER);
+        user.setEmail(username);
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        return user;
     }
 
     //USED FOR AUTHENTIFICATION

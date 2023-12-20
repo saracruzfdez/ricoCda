@@ -1,4 +1,4 @@
-package com.cda.rico.services.user;
-
-public class UserServiceModel {
-}
+//package com.cda.rico.services.user;
+//
+//public class UserServiceModel {
+//}

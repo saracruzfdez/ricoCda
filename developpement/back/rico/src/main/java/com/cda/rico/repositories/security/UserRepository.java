@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OwnerRepository extends CrudRepository<Owner, Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 //    Owner findByLogin(String login);
-    Owner findByEmail(String email);
+    User findByEmail(String email);
 }

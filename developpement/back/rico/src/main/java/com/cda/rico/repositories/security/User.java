@@ -1,22 +1,27 @@
 package com.cda.rico.repositories.security;
 
+import com.cda.rico.enums.RoleEnum;
 import com.cda.rico.repositories.menu.MenuRepositoryModel;
 import com.cda.rico.repositories.rating.RatingRepositoryModel;
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 import com.cda.rico.repositories.recovery_password.RecoveryPasswordRepositoryModel;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="user")
-public class Owner implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,16 +30,6 @@ public class Owner implements UserDetails {
     private String email;
 
     private String password;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
-
-//    public void setRoles(List<Role> roles) {
-//        if(roles.isEmpty()){
-//            this.roles.add()
-//        }
-//        this.roles = roles;
-//    }
 
     private String gender;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -57,9 +52,12 @@ public class Owner implements UserDetails {
     @OneToMany(mappedBy = "user")
     List<RatingRepositoryModel> ratings;
 
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
     @Override
     public String getPassword() {
