@@ -18,6 +18,7 @@ import { RecipeComponent } from './recipe/recipe.component';
 import { InscriptionComponent } from './inscription/inscription.component';
 import { LoginComponent } from './login/login.component';
 import { RecuperationComponent } from './recuperation/recuperation.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RecuperationComponent } from './recuperation/recuperation.component';
     RecipeComponent,
     InscriptionComponent,
     LoginComponent,
-    RecuperationComponent
+    RecuperationComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

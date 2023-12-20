@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -22,7 +22,15 @@ export class UnitService {
   private apiUrl = 'http://localhost:9000/unities';
 
   constructor(private http: HttpClient) { }
+
+  private getHeaders(): HttpHeaders {
+    const token = sessionStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
   getUnities(): Observable<UnitEnum[]> {
-    return this.http.get<UnitEnum[]>(this.apiUrl);
+    return this.http.get<UnitEnum[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 }

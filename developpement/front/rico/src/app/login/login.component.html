@@ -1,17 +1,12 @@
-<div
-    class="container bg-white"
-    style="margin-top:90px; position: relative;"
->
+<app-recipes-nav></app-recipes-nav>
+<div class="container w-50 bg-white p-5">
+    <h5>Connectez-vous :</h5>
 
-    <div class="p-3">
-        <form
+<form
             form
             #formAuth="ngForm"
             (ngSubmit)="loggedIn(formAuth)"
-            class="m-auto p-3 w-75 border"
         >
-
-            <h4 class="pb-2">Connectez-vous :</h4>
 
             <div class="mb-3">
                 <label
@@ -59,15 +54,14 @@
                 </div>
             </div>
             <button
-                type="submit"
-                class="btn btn-danger btn-sm"
-            >
-                Envoyer
-            </button>
+            type="submit"
+            class="btn btn-outline-danger"
+        >
+            Envoyer
+        </button>
         </form>
         <div class="pt-3 text-center">
             Pas encore inscrit ?
             <a routerLink="/inscription">Inscrivez-vous !</a>
         </div>
     </div>
-</div>

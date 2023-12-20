@@ -94,5 +94,4 @@ export class AuthService {
   public registration = (formRegister: NgForm) => {
     return this.http.post<any>(environment.API_URL + "register", formRegister.value);
   }
-
 }

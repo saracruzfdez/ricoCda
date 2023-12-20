@@ -1,7 +1,8 @@
-<div class="container bg-white" style="margin-top:90px; position: relative;">
-    <div class="p-3">
-        <form #formRegister="ngForm" (ngSubmit)="registration(formRegister)" class="m-auto p-3 w-75 border">
-            <h4 class="pb-2">Inscrivez-vous :</h4>
+<app-recipes-nav></app-recipes-nav>
+<div class="container w-50 bg-white p-5">
+    <h5>Inscrivez-vous :</h5>
+
+        <form #formRegister="ngForm" (ngSubmit)="registration(formRegister)">
             <div class="mb-3">
                 <label
                     for="username"
@@ -39,11 +40,10 @@ Login name                </label>
                 >
             </div>
             <button
-                type="submit"
-                class="btn btn-danger btn-sm"
-            >
-                Envoyer
-            </button>
+            type="submit"
+            class="btn btn-outline-danger"
+        >
+            Envoyer
+        </button>
         </form>
     </div>
-</div>
