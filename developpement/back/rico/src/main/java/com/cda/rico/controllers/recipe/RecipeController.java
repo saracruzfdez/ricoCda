@@ -18,12 +18,20 @@ public class RecipeController {
     private RecipeService recipeService;
     @Autowired
     private RecipeRepository recipeRepository;
-    @PostMapping
-    public boolean addRecipeToBdd(@RequestBody RecipeDTO recipeDTO){
+
+    @PostMapping("/users/{id}/recipes")
+    public boolean addRecipeToBdd(@PathVariable int id, @RequestBody RecipeDTO recipeDTO){
+
         RecipeServiceModel recipeServiceModel = RecipeMapper.INSTANCE.dtoToServiceModel(recipeDTO);
         // System.out.println(recipeDTO);
-        return recipeService.add(recipeServiceModel);
+        boolean success = recipeService.add(id, recipeServiceModel);
+        if (success) {
+            return ResponseEntity.ok("Receta creada exitosamente para el usuario con ID: " + id).hasBody();
+        } else {
+            return ResponseEntity.badRequest().body("No se pudo crear la receta. Usuario no encontrado.").hasBody();
+        }
     }
+
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id){
         recipeRepository.deleteById(id);

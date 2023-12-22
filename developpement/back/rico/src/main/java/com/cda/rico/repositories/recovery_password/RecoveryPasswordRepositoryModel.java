@@ -1,14 +1,20 @@
 package com.cda.rico.repositories.recovery_password;
 
-import com.cda.rico.repositories.security.User;
+import com.cda.rico.repositories.security.UserRepositoryModel;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name="recovery_password")
-@Data
 public class RecoveryPasswordRepositoryModel {
     // Marking the 'id' field as the primary key
     @Id
@@ -22,5 +28,5 @@ public class RecoveryPasswordRepositoryModel {
     // Relationship
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
-    private User user;
+    private UserRepositoryModel user;
 }

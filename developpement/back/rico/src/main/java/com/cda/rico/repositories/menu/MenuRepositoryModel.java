@@ -1,19 +1,24 @@
 package com.cda.rico.repositories.menu;
 
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
-import com.cda.rico.repositories.security.User;
+import com.cda.rico.repositories.security.UserRepositoryModel;
 import com.cda.rico.repositories.shopping_list_ingredient.ShoppingListIngredientRepositoryModel;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name="menu")
-@Data
 public class MenuRepositoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +31,7 @@ public class MenuRepositoryModel {
     //Relationship
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserRepositoryModel user;
 
     @ManyToMany
     @JoinTable(
@@ -38,5 +43,11 @@ public class MenuRepositoryModel {
 
     @OneToMany(mappedBy = "menuRepositoryModel", cascade = CascadeType.ALL)
     private List<ShoppingListIngredientRepositoryModel> shoppingListIngredients  = new ArrayList<>();
+
+    public void asociarReceta(RecipeRepositoryModel recipeRepositoryModel) {
+        menuRecipes.add(recipeRepositoryModel);
+        recipeRepositoryModel.getMenus().add(this);
+    }
+
 
 }

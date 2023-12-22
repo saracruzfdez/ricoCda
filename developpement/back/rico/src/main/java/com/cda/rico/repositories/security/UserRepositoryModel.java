@@ -5,23 +5,23 @@ import com.cda.rico.repositories.menu.MenuRepositoryModel;
 import com.cda.rico.repositories.rating.RatingRepositoryModel;
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 import com.cda.rico.repositories.recovery_password.RecoveryPasswordRepositoryModel;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Getter
 @Setter
 @Entity
 @Table(name="user")
-public class User implements UserDetails {
+public class UserRepositoryModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -39,25 +39,29 @@ public class User implements UserDetails {
     @JoinTable(
             name = "favorite_recipe",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "recipe_id")
+            inverseJoinColumns = @JoinColumn(name = "favorite_recipe_id")
     )
     private List<RecipeRepositoryModel> favoriteRecipes = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private RecoveryPasswordRepositoryModel recoveryPasswordRepositoryModel;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany()
+    @JoinColumn(name = "user_id")
     private List<RecipeRepositoryModel> createdRecipes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     List<RatingRepositoryModel> ratings;
 
-    @Enumerated(EnumType.STRING)
-    private RoleEnum role;
+    @Column
+    private String role_user;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles;
     }
     @Override
     public String getPassword() {

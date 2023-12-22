@@ -56,8 +56,8 @@ export class RecipeService {
     return this.http.get(`http://localhost:9000/recipes/${id}`, { headers: this.getHeaders() }) as Observable<Recipe>;
   }
 
-  add(newRecipe: Recipe): Observable<Recipe> {
-    return this.http.post('http://localhost:9000/recipes', newRecipe, { headers: this.getHeaders() }) as Observable<Recipe>;
+  add(newRecipe: Recipe, id: any): Observable<Recipe> {
+    return this.http.post(`http://localhost:9000/recipes/users/${id}/recipes`, newRecipe, { headers: this.getHeaders() }) as Observable<Recipe>;
   }
 
   update(id: number, updatedRecipe: Recipe): Observable<Recipe> {

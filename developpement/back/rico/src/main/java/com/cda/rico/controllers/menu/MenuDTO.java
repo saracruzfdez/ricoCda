@@ -1,4 +1,7 @@
 package com.cda.rico.controllers.menu;
 
-public class MenuDTO {
+public record MenuDTO(
+        String name
+) {
+
 }

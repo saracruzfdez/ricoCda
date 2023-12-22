@@ -3,21 +3,25 @@ package com.cda.rico.repositories.recipe;
 import com.cda.rico.repositories.ingredient.IngredientRepositoryModel;
 import com.cda.rico.repositories.menu.MenuRepositoryModel;
 import com.cda.rico.repositories.rating.RatingRepositoryModel;
-import com.cda.rico.repositories.security.User;
+import com.cda.rico.repositories.security.UserRepositoryModel;
 import com.cda.rico.repositories.step.StepRepositoryModel;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-// Marking the class as a database entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 @NoArgsConstructor
 @Table(name="recipe")
-@Data
+@Getter
+@Setter
 public class RecipeRepositoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,14 +63,13 @@ public class RecipeRepositoryModel {
     private List<StepRepositoryModel> steps  = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private UserRepositoryModel user;
 
     @ManyToMany(mappedBy = "menuRecipes")
     private List<MenuRepositoryModel> menus = new ArrayList<>();
 
     @ManyToMany(mappedBy = "favoriteRecipes")
-    private List<User> users = new ArrayList<>();
+    private List<UserRepositoryModel> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipeRepositoryModel")
     Set<RatingRepositoryModel> ratings;

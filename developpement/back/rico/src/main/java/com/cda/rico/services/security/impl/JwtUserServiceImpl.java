@@ -2,7 +2,7 @@ package com.cda.rico.services.security.impl;
 
 import com.cda.rico.enums.RoleEnum;
 import com.cda.rico.exceptions.AccountExistsException;
-import com.cda.rico.repositories.security.User;
+import com.cda.rico.repositories.security.UserRepositoryModel;
 import com.cda.rico.repositories.security.UserRepository;
 import com.cda.rico.services.security.JwtUserService;
 import io.jsonwebtoken.Claims;
@@ -38,11 +38,11 @@ public class JwtUserServiceImpl implements JwtUserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws
             UsernameNotFoundException {
-        User owner = userRepository.findByEmail(username);
-        if (owner == null) {
+        UserRepositoryModel user = userRepository.findByEmail(username);
+        if (user == null) {
             throw new UsernameNotFoundException("The owner could not be found");
         }
-        return owner;
+        return user;
     }
 
     // USED FOR REGISTRATION
@@ -61,21 +61,20 @@ public class JwtUserServiceImpl implements JwtUserService {
         if (existingUser != null) {
             throw new AccountExistsException();
         }
-        User owner = new User();
-        owner.setEmail(username);
-        owner.setPassword(passwordEncoder.encode(password));
-        userRepository.save(owner);
-        return owner;
+        UserRepositoryModel user = new UserRepositoryModel();
+        user.setEmail(username);
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        return user;
     }
 
-    @Override
-    public User saveUser(String gender, String username, String password) throws AccountExistsException {
-        User existingUser = userRepository.findByEmail(username);
+    public UserRepositoryModel saveUser(String username, String password) throws AccountExistsException {
+        UserRepositoryModel existingUser = userRepository.findByEmail(username);
         if (existingUser != null) {
             throw new AccountExistsException();
         }
-        User user = new User();
-        user.setRole(RoleEnum.USER);
+        UserRepositoryModel user = new UserRepositoryModel();
+        user.setRole_user("user");
         user.setEmail(username);
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
@@ -106,6 +105,17 @@ public class JwtUserServiceImpl implements JwtUserService {
                 Jwts.builder().setSubject(user.getUsername()).setIssuedAt(now).setExpiration(expiryDate)
                         .signWith(SignatureAlgorithm.HS512, signingKey)
                         .compact();
+    }
+    @Override
+    public int getUserIdFromJwt(String jwt) {
+        String username = getUsernameFromToken(jwt);
+        UserDetails userDetails = loadUserByUsername(username);
+
+        if (userDetails instanceof UserRepositoryModel) {
+            return ((UserRepositoryModel) userDetails).getId();
+        } else {
+            throw new IllegalStateException("No se pudo obtener el ID del usuario desde el token JWT.");
+        }
     }
 
 }

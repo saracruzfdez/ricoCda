@@ -6,6 +6,7 @@ import com.cda.rico.controllers.step.StepDTO;
 import java.util.List;
 
 public record RecipeDTO(
+
         String image_path,
         String category,
         String title,

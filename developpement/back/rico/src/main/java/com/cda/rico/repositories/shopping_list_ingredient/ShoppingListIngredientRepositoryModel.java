@@ -2,14 +2,20 @@ package com.cda.rico.repositories.shopping_list_ingredient;
 
 import com.cda.rico.enums.UnitEnum;
 import com.cda.rico.repositories.menu.MenuRepositoryModel;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 @NoArgsConstructor
+@Getter
+@Setter
 @Table(name="shopping_List_ingredient")
-@Data
 public class ShoppingListIngredientRepositoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,14 +1,16 @@
 package com.cda.rico.repositories.ingredient;
 
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.NoArgsConstructor;
 
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 // Specifying the table name for the entity
 @Table(name="ingredient")
-@Data
 @Getter
 @Setter
 @NoArgsConstructor

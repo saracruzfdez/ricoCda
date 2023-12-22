@@ -6,6 +6,8 @@ import com.cda.rico.repositories.ingredient.IngredientRepositoryModel;
 import com.cda.rico.repositories.recipe.RecipeRepository;
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
 
+import com.cda.rico.repositories.security.UserRepositoryModel;
+import com.cda.rico.repositories.security.UserRepository;
 import com.cda.rico.repositories.step.StepRepository;
 import com.cda.rico.repositories.step.StepRepositoryModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +22,42 @@ public class RecipeService {
 
     @Autowired
     private RecipeRepository recipeRepository;
-
     @Autowired
     private IngredientRepository ingredientRepository;
     @Autowired
     private StepRepository stepRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     // Method to add a recipe
-    public boolean add(RecipeServiceModel recipeServiceModel) {
+    public boolean add(int userId, RecipeServiceModel recipeServiceModel) {
+        Optional<UserRepositoryModel> userOptional = userRepository.findById(userId);
 
-        // Map RecipeServiceModel to RecipeRepositoryModel
-        RecipeRepositoryModel recipeRepositoryModel = RecipeMapper.INSTANCE.serviceToRepository(recipeServiceModel);
+        if (userOptional.isPresent()) {
+            UserRepositoryModel user = userOptional.get();
 
-        // Save the recipe in the database
-        RecipeRepositoryModel recipeRepositoryModelReturned = recipeRepository.save(recipeRepositoryModel);
+            // Map RecipeServiceModel to RecipeRepositoryModel
+            RecipeRepositoryModel recipeRepositoryModel = RecipeMapper.INSTANCE.serviceToRepository(recipeServiceModel);
 
-        recipeRepositoryModelReturned.getIngredients().stream().map((x) -> ingredientRepository.save(new IngredientRepositoryModel(
-                x.getId(), x.getName(), x.getQuantity(), x.getUnit(),recipeRepositoryModel
-        ))).toList();
+            recipeRepositoryModel.setUser(user);
 
-        recipeRepositoryModelReturned.getSteps().stream().map((x) -> stepRepository.save(new StepRepositoryModel(x.getId(), x.getName(), x.getDescription(), recipeRepositoryModel))).toList();
+            // Guardar la receta en la base de datos
+            RecipeRepositoryModel recipeRepositoryModelReturned = recipeRepository.save(recipeRepositoryModel);
 
-        // Return true if the recipe was successfully saved
-        return recipeRepositoryModelReturned != null;
+            recipeRepositoryModelReturned.getIngredients().stream().map((x) -> ingredientRepository.save(new IngredientRepositoryModel(
+                    x.getId(), x.getName(), x.getQuantity(), x.getUnit(),recipeRepositoryModel
+            ))).toList();
+
+            recipeRepositoryModelReturned.getSteps().stream().map((x) -> stepRepository.save(new StepRepositoryModel(x.getId(), x.getName(), x.getDescription(), recipeRepositoryModel))).toList();
+
+            // Actualizar el usuario con la receta creada
+            user.getCreatedRecipes().add(recipeRepositoryModelReturned);
+            userRepository.save(user);
+
+            return recipeRepositoryModelReturned != null;
+        }
+        return false;
     }
 
     public boolean update(int id, RecipeServiceModel updatedRecipe) {

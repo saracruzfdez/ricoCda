@@ -1,16 +1,18 @@
 package com.cda.rico.repositories.step;
 
 import com.cda.rico.repositories.recipe.RecipeRepositoryModel;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="step")
-@Data
 public class StepRepositoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

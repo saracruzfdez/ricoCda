@@ -20,7 +20,7 @@ export class LoginComponent {
         next: (data) => {
           // console.log('Utilisateur: ', data.user);
           // console.log('token: ', data.token);
-          // console.log('token: ', data);
+           console.log('token: ', data);
           // Enregistre le token et redirige vers la page d'acceuil
           this.authService.doLogged(data);
         },

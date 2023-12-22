@@ -84,11 +84,17 @@ export class AuthService {
     // Suppression du token et de l'utilisateur de la session de stockage
     let removeToken: void = sessionStorage.removeItem('token');
     let removeUser: void = sessionStorage.removeItem('user');
+    this.router.navigate([""]);
+
   }
 
-  // REQUETE HTTP / CRUD
+  // REQUETE HTTP / CRUD 
   public loggedIn = (formAuth: NgForm) => {
-    return this.http.post<any>(environment.API_URL + "authorize", formAuth.value);
+    console.log(formAuth.value)
+    return this.http.post<any>(environment.API_URL + "authorize", {
+      username: formAuth.value.username,
+      password: formAuth.value.password
+    });
   }
 
   public registration = (formRegister: NgForm) => {

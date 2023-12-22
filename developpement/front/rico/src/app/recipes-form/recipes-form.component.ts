@@ -9,6 +9,7 @@ import { AverageCostEnum, CostService } from '../services/cost.service';
 import { DifficultyEnum, DifficultyService } from '../services/difficulty.service';
 import { UnitEnum, UnitService } from '../services/unit.service';
 import { AbstractControl } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-recipes-form',
@@ -35,7 +36,8 @@ export class RecipesFormComponent implements OnInit {
     private unitService: UnitService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private auth: AuthService
   ) {
 
     this.recipesForm = this.fb.group({
@@ -205,14 +207,15 @@ export class RecipesFormComponent implements OnInit {
         }
       );
     } else {
-      this.recipeService.add(recipesForm.value as Recipe).subscribe(
-        () => {
-          this.router.navigate(['/recipes']);
-        },
-        (error) => {
-          console.error('Error adding recipe:', error);
-        }
-      );
+        this.recipeService.add(recipesForm.value as Recipe, this.auth.getUser()?.id).subscribe(
+          () => {
+            this.router.navigate(['/recipes']);
+          },
+          (error) => {
+            console.error('Error adding recipe:', error);
+          }
+        );
     }
   }
 }
+
