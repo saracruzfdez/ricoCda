@@ -19,6 +19,7 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { LoginComponent } from './login/login.component';
 import { RecuperationComponent } from './recuperation/recuperation.component';
 import { HomeComponent } from './home/home.component';
+import { FavorisComponent } from './favoris/favoris.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { HomeComponent } from './home/home.component';
     InscriptionComponent,
     LoginComponent,
     RecuperationComponent,
-    HomeComponent
+    HomeComponent,
+    FavorisComponent
   ],
   imports: [
     BrowserModule,

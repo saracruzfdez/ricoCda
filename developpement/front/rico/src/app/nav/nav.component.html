@@ -31,7 +31,7 @@
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a *ngIf="authService.isAuth()" class="nav-link" routerLink="/recipes">
+                    <a *ngIf="authService.isAuth()" class="nav-link" routerLink="/recipes" [routerLinkActive]="['active']">
                         Recettes
                     </a>
                 </li>
@@ -41,6 +41,7 @@
                         *ngIf="authService.isAuth()"
                         class="nav-link"
                         routerLink="/menus"
+                        [routerLinkActive]="['active']"
                     >
                         Tes menus
                     </a>
@@ -50,13 +51,16 @@
                         *ngIf="authService.isAuth()"
                         class="nav-link"
                         routerLink="/shopping-list"
+                        [routerLinkActive]="['active']"
                     >
                         Liste de courses
                     </a>
                 </li>
                 <li class="nav-item">
                     <a *ngIf="authService.isAuth()" class="nav-link"
-                        routerLink
+                    [routerLinkActive]="['active']"
+                    routerLink="/favoris"
+
                     >
                         Favoris
                     </a>
@@ -88,8 +92,8 @@
                         href="#"
                         *ngIf="authService.isAuth()"
                     >
-                        Hello
-                        <span class="badge rounded-pill text-dark">User !</span>
+                        Bonjour
+                        <span class="badge rounded-pill text-dark">{{ authService.getUser()?.username }} !</span>
                     </a>
                 </li>
             </ul>

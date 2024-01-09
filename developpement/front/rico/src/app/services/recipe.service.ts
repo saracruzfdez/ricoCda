@@ -28,6 +28,7 @@ export interface Recipe {
   country_origin: string;
   ingredients: Ingredient[];
   steps: Step[];
+  
 }
 
 @Injectable({

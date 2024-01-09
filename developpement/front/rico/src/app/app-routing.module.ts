@@ -10,6 +10,7 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
+import { FavorisComponent } from './favoris/favoris.component';
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path:'recipes-form', component:RecipesFormComponent, canActivate: [authGuard]},
   {path:'recipes-form/:id', component:RecipesFormComponent, canActivate: [authGuard]},
   {path:'recipe/:id', component:RecipeComponent, canActivate: [authGuard]},
+  {path:'favoris', component:FavorisComponent, canActivate: [authGuard]},
   {path:'inscription', component:InscriptionComponent},
   {path:'login', component:LoginComponent},
 ];
