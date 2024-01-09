@@ -1,1 +1,26 @@
 <app-recipes-nav></app-recipes-nav>
+
+<div class="container">
+    <div class="d-flex flex-wrap justify-content-center">
+        <div
+            *ngFor="let userRecipemodel of userRecipes"
+            class="card text-center m-3"
+        >
+            <img
+                class="card-img-top"
+                src={{userRecipemodel.image_path}}
+                alt="pollo"
+            >
+            <h5 class="card-title pt-2">{{userRecipemodel.title}}</h5>
+            <div class="d-flex justify-content-center">{{userRecipemodel.category}}</div>
+            <div class="card-body">
+                <a
+                    [routerLink]="['/recipe', userRecipemodel.id]"
+                    class="card-link btn btn-outline-danger btn-sm"
+                >
+                    Voir détail
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

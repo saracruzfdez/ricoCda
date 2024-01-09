@@ -6,6 +6,7 @@ import { User } from '../interfaces/user.interface';
 import { environment } from 'src/environments/environment';
 import { NgForm } from '@angular/forms';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -78,7 +79,6 @@ export class AuthService {
     let removeToken: void = sessionStorage.removeItem('token');
     let removeUser: void = sessionStorage.removeItem('user');
     this.router.navigate([""]);
-
   }
 
   // REQUETE HTTP / CRUD 

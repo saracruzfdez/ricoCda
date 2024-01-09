@@ -35,10 +35,44 @@ export class JwtTokenService {
     return jwtDecode(this.jwtToken);
   }
 
-  getUser(): string | null {
+
+
+
+
+  // getUser(): string | null {
+  //   this.decodeToken();
+  //   return this.decodedToken ? this.decodedToken.sub : null;
+  // }
+
+  //Quitar ??
+  getUser(): number | null {
     this.decodeToken();
-    return this.decodedToken ? this.decodedToken.sub : null;
+    const userIdString = this.decodedToken?.sub;
+
+    if (userIdString !== null && userIdString !== undefined) {
+      const userId = parseInt(userIdString, 10);
+      return !isNaN(userId) ? userId : null;
+    }
+
+    return null;
   }
+
+  getUserId(): number | null {
+    this.decodeToken();
+    const userIdString = this.decodedToken?.sub;
+
+    if (userIdString !== null && userIdString !== undefined) {
+      const userId = parseInt(userIdString, 10);
+      return !isNaN(userId) ? userId : null;
+    }
+
+    return null;
+  }
+//Quitar ?
+
+
+
+
 
   getExpiryTime() {
     this.decodeToken();

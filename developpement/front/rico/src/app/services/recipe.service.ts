@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { JwtTokenService } from './jwt-token.service';  // Ajusta la ruta al servicio
+import { catchError } from 'rxjs/operators';
+
 
 export interface Ingredient {
   id: number;
@@ -28,7 +31,7 @@ export interface Recipe {
   country_origin: string;
   ingredients: Ingredient[];
   steps: Step[];
-  
+
 }
 
 @Injectable({
@@ -37,7 +40,7 @@ export interface Recipe {
 
 export class RecipeService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwtTokenService: JwtTokenService) { }
 
   private getHeaders(): HttpHeaders {
     const token = sessionStorage.getItem('token');
@@ -57,6 +60,28 @@ export class RecipeService {
     return this.http.get(`http://localhost:9000/recipes/${id}`, { headers: this.getHeaders() }) as Observable<Recipe>;
   }
 
+
+
+
+
+
+
+     // Quitar ? :
+     getAllForCurrentUser(userId: number): Observable<Array<Recipe>> {
+      if (!userId) {
+        // Manejar el escenario donde no se puede obtener el userId
+        return throwError("No se pudo obtener el userId");
+      }
+    
+      return this.http.get(`http://localhost:9000/recipes/user/${userId}`, { headers: this.getHeaders() }) as Observable<Array<Recipe>>;
+    }
+    // quitar ?
+
+
+
+    
+
+
   add(newRecipe: Recipe, id: any): Observable<Recipe> {
     return this.http.post(`http://localhost:9000/recipes/users/${id}/recipes`, newRecipe, { headers: this.getHeaders() }) as Observable<Recipe>;
   }
@@ -70,5 +95,8 @@ export class RecipeService {
       console.error('Error request:', error);
       return throwError(error);
     }
-    
+
+
+
+
 }
