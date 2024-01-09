@@ -17,21 +17,14 @@ export class AuthService {
     private jwtTokenService: JwtTokenService
   ) { }
 
-  // Méthode pour vérifier si un utilisateur est authentifié + token n'a pas expiré
   public isAuth = (): boolean => {
 
-    // Récupérez le token depuis le stockage
     const token = this.getToken();
 
     if (token) {
-      // Configurez le service de gestion des jetons avec le token récupéré
       this.jwtTokenService.setToken(token);
-
-      // Retournez true si le token n'a pas expiré, indiquant que l'utilisateur est authentifié
       return !this.jwtTokenService.isTokenExpired();
     }
-
-    // Retournez false si aucun token n'a été trouvé, indiquant que l'utilisateur n'est pas authentifié
     return false;
   }
 
